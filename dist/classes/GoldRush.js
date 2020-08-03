@@ -5,6 +5,11 @@ export class GoldRush extends Matrix {
         super()
         this.player1 = { x: 0, y: 0, num: 1, Px: 0, Py: 0, score: 0 }
         this.player2 = { x: 4, y: 4, num: 2, Px: 4, Py: 4, score: 0 }
+        this.rightBound = 4
+        this.topBound = 0
+        this.leftBound = 0
+        this.bottomBound = 4
+        this.coins = []
     }
 
     loadBoard = () => {
@@ -25,6 +30,7 @@ export class GoldRush extends Matrix {
         let posY = Math.floor(Math.random() * 4)
         if (this.get(posY, posX) !== '.') { return this.createCoins() }
         this.alter(posY, posX, 'c')
+        this.coins.push({ posX, posY })
     }
 
     movePlayer = (player, direction) => {
@@ -37,20 +43,18 @@ export class GoldRush extends Matrix {
     }
 
     addToDirection = (player, direction) => {
-        if (direction === 'down') {
-            return player.y++
-        } else if (direction === 'up') {
-            return player.y--
-        } else if (direction === 'left') {
-            return player.x--
-        } else {
-            return player.x++
-        }
+        if (direction === 'down' && player.y !== this.bottomBound) { return player.y++ }
+        else if (direction === 'up' && player.y !== this.topBound) { return player.y-- }
+        else if (direction === 'left' && player.x !== this.leftBound) { return player.x-- }
+        else if (direction === 'right' && player.x !== this.rightBound) { return player.x++ }
+        else { return }
     }
 
     checkForCoins = (player) => {
-        if (this.findInCoinsArr(player.x, player.y)) {
+        const coin = this.findInCoinsArr(player.x, player.y)
+        if (coin) {
             player.score += 10
+            this.coins.splice(this.coins.indexOf(coin), 1)
         }
     }
 

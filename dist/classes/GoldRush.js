@@ -1,33 +1,33 @@
 import { Matrix } from './Matrix.js'
 
 export class GoldRush extends Matrix {
-    constructor() {
+    constructor(x, y) {
         super()
         this.player1 = { x: 0, y: 0, num: 1, Px: 0, Py: 0, score: 0 }
-        this.player2 = { x: 4, y: 4, num: 2, Px: 4, Py: 4, score: 0 }
-        this.rightBound = 4
+        this.player2 = { x: x - 1, y: y - 1, num: 2, Px: x - 1, Py: y - 1, score: 0 }
+        this.rightBound = x
         this.topBound = 0
         this.leftBound = 0
-        this.bottomBound = 4
+        this.bottomBound = y
         this.coins = []
     }
 
     loadBoard = () => {
-        this.matrix = this.generateMatrix(5, 5)
-        this.alter(0, 0, 1)
-        this.alter(4, 4, 2)
+        this.matrix = this.generateMatrix(this.rightBound, this.bottomBound)
+        this.alter(this.player1.x, this.player1.y, this.player1.num)
+        this.alter(this.player2.x, this.player2.y, this.player2.num)
         this.addCoins()
     }
 
     addCoins = () => {
-        for (let i = 0; i < this.matrix.length * 2; i++) {
+        for (let i = 0; i < this.matrix.length * 1.5; i++) {
             this.createCoins()
         }
     }
 
     createCoins = () => {
-        let posX = Math.floor(Math.random() * 4)
-        let posY = Math.floor(Math.random() * 4)
+        let posX = Math.floor(Math.random() * this.rightBound)
+        let posY = Math.floor(Math.random() * this.bottomBound)
         if (this.get(posY, posX) !== '.') { return this.createCoins() }
         this.alter(posY, posX, 'c')
         this.coins.push({ posX, posY })

@@ -23,7 +23,27 @@
     </div>
 
     <script id="game-board-template" type="text/x-handlebars-template">
-    
+        {{#each row}}
+            <div class="row">
+                {{#each this}}
+                    <div class="col">
+                        {{#if this}}
+                            {{#if (ifCoin this)}}
+                                <img class="gold-img" src="./assests/rich.png">
+                            {{/if}}
+                            {{#if (ifPlayerOne this)}}
+                                <img src="./assests/playerOne.png" class="gold-img">
+                            {{/if}}
+                            {{#if (ifPlayerTwo this)}}
+                                <img src="./assests/playerTwo.png" class="gold-img">
+                            {{/if}}
+                            {{else}}
+                                <p></p>
+                        {{/if}}
+                    </div>
+                {{/each}}
+            </div>
+        {{/each}}
     </script>
 
     <script src="handlebars/dist/handlebars.js"></script>

@@ -12,7 +12,12 @@
 <body>
 
     <div class="main-container">
-        <div class="game-area"></div>
+        <div class="game-area">
+            <label for="rowNum">Enter the number of rows</label>
+            <input id="rowNum" type="text">
+            <label for="colNum">Enter the number of columns</label>
+            <input id="colNum" type="text">
+        </div>
         <div class="score-container">
             <p class="player-score">Player 1: <span class="player-1-score">0</span></p>
             <p class="player-score">Player 2: <span class="player-2-score">0</span></p>
@@ -36,6 +41,9 @@
                             {{/if}}
                             {{#if (ifPlayerTwo this)}}
                                 <img src="./assests/playerTwo.png" class="gold-img">
+                            {{/if}}
+                            {{#if (ifObstacle this)}}
+                                <img src="./assests/obstacle.jpg" class="obstacle-img">
                             {{/if}}
                             {{else}}
                                 <p></p>

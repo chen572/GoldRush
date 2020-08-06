@@ -1,4 +1,4 @@
-export class Matrix {
+class Matrix {
     constructor(rowNum, colNum) {
         this.matrix = this.generateMatrix(rowNum, colNum)
     }
@@ -47,3 +47,5 @@ export class Matrix {
         return cords
     }
 }
+
+module.exports = Matrix

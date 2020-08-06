@@ -1,7 +1,7 @@
 import { Renderer } from './classes/Render.js'
-import { GoldRush, keyMap } from './classes/GoldRush.js'
+import { GameManager } from './classes/GameManager.js'
 const renderer = new Renderer()
-const board = new GoldRush(10, 10)
+const GM = new GameManager()
 // const socket = io('http://localhost:3001')
 
 // socket.on('test', data => {
@@ -22,22 +22,24 @@ $('.options').click(event => {
     }
 })
 
-const init = function () {
+const init = async function () {
     const x = $('#colNum').val()
     const y = $('#rowNum').val()
-    board.loadBoard(x, y)
-    renderer.renderBoard(board.matrix)
+    await GM.initGameBoard(x, y)
+    renderer.renderBoard(GM.gameBoard)
 }
 
-$(document).keypress(event => {
-    const [player, direction] = keyMap[event.key] || [1, 'none']
-    board.movePlayer(player, direction)
-    renderer.renderBoard(board.matrix)
-    renderer.renderScores(board.player1.score, board.player2.score)
-    console.log(board.coins)
-    if (board.checkForWin()) { renderer.renderEndScreen(board.getWinner()) }
-})
+// $(document).keypress(event => {
+//     const [player, direction] = keyMap[event.key] || [1, 'none']
+//     board.movePlayer(player, direction)
+//     renderer.renderBoard(board.matrix)
+//     renderer.renderScores(board.player1.score, board.player2.score)
+//     console.log(board.coins)
+//     if (board.checkForWin()) { renderer.renderEndScreen(board.getWinner()) }
+// })
 
 $('.start-button').click(() => {
     init()
+    $('.menu').remove()
+    $('.background-filter').remove()
 })

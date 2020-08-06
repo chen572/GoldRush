@@ -1,14 +1,14 @@
-import { Matrix } from './Matrix.js'
+const Matrix = require('./Matrix')
 
-export class GoldRush extends Matrix {
-    constructor(x, y) {
+class GoldRush extends Matrix {
+    constructor() {
         super()
         this.player1 = { x: 0, y: 0, num: 1, Px: 0, Py: 0, score: 0 }
-        this.player2 = { x: x - 1, y: y - 1, num: 2, Px: x - 1, Py: y - 1, score: 0 }
-        this.rightBound = x - 1
+        this.player2 = { x: null, y: null, num: 2, Px: null, Py: null, score: 0 }
+        this.rightBound = null
         this.topBound = 0
         this.leftBound = 0
-        this.bottomBound = y - 1
+        this.bottomBound = null
         this.coins = []
     }
 
@@ -92,7 +92,7 @@ export class GoldRush extends Matrix {
     findInCoinsArr = (x, y) => this.coins.find(c => c.posX === x && c.posY === y)
 }
 
-export const keyMap =
+const keyMap =
 {
     i: [1, 'up'],
     k: [1, 'down'],
@@ -103,3 +103,5 @@ export const keyMap =
     a: [2, 'left'],
     d: [2, 'right']
 }
+
+module.exports = { GoldRush, keyMap }

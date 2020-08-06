@@ -16,10 +16,12 @@ app.use(express.static(path.join(__dirname, 'node_modules')))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
-app.get('/', (req, res) => {
-    // console.log(Socket.io.path())
-    res.end()
-})
+app.use('/', router)
+
+// app.get('/', (req, res) => {
+//     // console.log(Socket.io.path())
+//     res.end()
+// })
 
 // const roomKey = true
 // Socket.io.on('connection', socket => {

@@ -1,3 +1,18 @@
+@keyframes click {
+    0% {
+        width: 35%;
+        height: 10%;
+    }
+    50% {
+        width: 30%;
+        height: 7%;
+    }
+    100% {
+        width: 35%;
+        height: 10%;
+    }
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -71,7 +86,7 @@ body {
 
 .start-button {
     width: 95%;
-    height: 80%;
+    height: 10%;
     margin: 8px;
     background-color: crimson;
     border-radius: 25px;
@@ -79,4 +94,65 @@ body {
     letter-spacing: 3px;
     font-weight: bold;
     outline: none;
+}
+
+.background-filter {
+    width: 100vw;
+    height: 100vh;
+    background-color: #CFDBD5;
+    opacity: 0.6;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.menu {
+    position: absolute;
+    opacity: 0.80;
+    width: 40%;
+    height: 80%;
+    background-color: indigo;
+    top: 70px;
+    border-radius: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.input-container {
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    transform: translateY(30%);
+    color: white;
+}
+
+.options {
+    width: 40%;
+    height: 10%;
+    background-color: white;
+    border: solid black 2px;
+    border-radius: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 26px;
+    font-weight: bold;
+    transition: width 1s, height 1s;
+}
+
+.click {
+    animation: click 1s;
+    background-color: black;
+    color: white;
+}
+
+input {
+    padding: 10px;
+}
+
+label {
+    margin: 5px;
 }

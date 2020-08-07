@@ -2,13 +2,14 @@ export const toggleAnimation = (clicked) => {
     $(clicked).toggleClass('click')
     if ($(clicked).hasClass('one-player')) { $('.two-player').removeClass('click') }
     if ($(clicked).hasClass('two-player')) { $('.one-player').removeClass('click') }
-    if ($(clicked).hasClass('local')) { $('.remote').removeClass('click') }
-    if ($(clicked).hasClass('remote')) { $('.local').removeClass('click') }
+    if ($(clicked).hasClass('local')) { $('.remote').removeClass('click'); $('.find-button').attr('disabled', true) }
+    if ($(clicked).hasClass('remote')) { $('.local').removeClass('click'); $('.find-button').removeAttr('disabled') }
     if ($(clicked).hasClass('computer')) {
         $('.remote').removeClass('click')
         $('.two-player').removeClass('click')
         $('.local').addClass('click')
         $('.one-player').addClass('click')
+        $('.find-button').attr('disabled', true)
     }
 }
 

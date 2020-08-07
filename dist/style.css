@@ -84,8 +84,8 @@ body {
     justify-content: center;
 }
 
-.start-button {
-    width: 95%;
+.start-button, .find-button {
+    width: 45%;
     height: 10%;
     margin: 8px;
     background-color: crimson;

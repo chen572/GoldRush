@@ -69,12 +69,14 @@ class GoldRush extends Matrix {
     }
 
     addToDirection = (player, direction) => {
-        if (direction === 'down' && player.y !== this.bottomBound && this.get(player.y + 1, player.x) !== 'x') { return player.y++ }
-        else if (direction === 'up' && player.y !== this.topBound && this.get(player.y - 1, player.x) !== 'x') { return player.y-- }
-        else if (direction === 'left' && player.x !== this.leftBound && this.get(player.y, player.x - 1) !== 'x') { return player.x-- }
-        else if (direction === 'right' && player.x !== this.rightBound && this.get(player.y, player.x + 1) !== 'x') { return player.x++ }
+        if (direction === 'down' && player.y !== this.bottomBound && this.checkNextSpot(player.y + 1, player.x)) { return player.y++ }
+        else if (direction === 'up' && player.y !== this.topBound && this.checkNextSpot(player.y - 1, player.x)) { return player.y-- }
+        else if (direction === 'left' && player.x !== this.leftBound && this.checkNextSpot(player.y, player.x - 1)) { return player.x-- }
+        else if (direction === 'right' && player.x !== this.rightBound && this.checkNextSpot(player.y, player.x + 1)) { return player.x++ }
         else { return }
     }
+
+    checkNextSpot = (y, x) => this.get(y, x) === '.' || this.get(y, x) === 'c'
 
     checkForCoins = (player) => {
         const coin = this.findInCoinsArr(player.x, player.y)

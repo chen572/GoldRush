@@ -11,11 +11,11 @@ export class GameManager {
 
     async refreshGameBoard() { this.gameBoard = await $.get('/board') }
 
-    async movePlayer(player, direction) { 
-        const gameObj = await $.ajax({ url: `/board?player=${player}&direction=${direction}`, method: 'PUT' }) 
+    async movePlayer(player, direction) {
+        const gameObj = await $.ajax({ url: `/board?player=${player}&direction=${direction}`, method: 'PUT' })
         gameObj.winner ?
-        this.winner = gameObj.winner :
-        this.gameBoard = gameObj.board
+            this.winner = gameObj.winner :
+            this.gameBoard = gameObj.board
         this.playerOneScore = gameObj.score.playerOne
         this.playerTwoScore = gameObj.score.playerTwo
     }

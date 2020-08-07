@@ -14,20 +14,19 @@ class GoldRush extends Matrix {
 
     loadBoard = (x, y) => {
         this.matrix = this.generateMatrix(x, y)
-        this.initVars(x, y)
+        this.resetVars(x, y)
         this.alter(this.player1.x, this.player1.y, this.player1.num)
         this.alter(this.player2.x, this.player2.y, this.player2.num)
         this.addCoins()
         this.addObstacles()
     }
 
-    initVars = (x, y) => {
-        this.player2.x = x - 1
-        this.player2.Px = x - 1
-        this.player2.y = y - 1
-        this.player2.Py = y - 1
+    resetVars = (x, y) => {
+        this.player1 = { x: 0, y: 0, num: 1, Px: 0, Py: 0, score: 0 }
+        this.player2 = { x: x - 1, y: y - 1, num: 2, Px: x - 1, Py: y - 1, score: 0 }
         this.rightBound = x - 1
         this.bottomBound = y - 1
+        this.coins = []
     }
 
     addCoins = () => {
@@ -61,7 +60,7 @@ class GoldRush extends Matrix {
     }
 
     movePlayer = (player, direction) => {
-        player = player === 1 ? this.player1 : this.player2
+        player = player == 1 ? this.player1 : this.player2
         this.addToDirection(player, direction)
         this.alter(player.Py, player.Px, '.')
         this.alter(player.y, player.x, player.num)
@@ -85,6 +84,15 @@ class GoldRush extends Matrix {
         }
     }
 
+    objForRes = (gameOver) => ({
+        board: this.matrix,
+        score: {
+            playerOne: this.player1.score,
+            playerTwo: this.player2.score
+        },
+        winner: gameOver ? this.getWinner() : null
+    })
+
     checkForWin = () => this.coins.length ? false : true
 
     getWinner = () => this.player1.score > this.player2.score ? 'Player1' : 'Player2'
@@ -92,16 +100,4 @@ class GoldRush extends Matrix {
     findInCoinsArr = (x, y) => this.coins.find(c => c.posX === x && c.posY === y)
 }
 
-const keyMap =
-{
-    i: [1, 'up'],
-    k: [1, 'down'],
-    j: [1, 'left'],
-    l: [1, 'right'],
-    w: [2, 'up'],
-    s: [2, 'down'],
-    a: [2, 'left'],
-    d: [2, 'right']
-}
-
-module.exports = { GoldRush, keyMap }
+module.exports = GoldRush

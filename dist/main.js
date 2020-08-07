@@ -1,3 +1,4 @@
+import { toggleAnimation, keyMap } from './classes/helpers/FunctionHelpers.js'
 import { Renderer } from './classes/Render.js'
 import { GameManager } from './classes/GameManager.js'
 const renderer = new Renderer()
@@ -9,37 +10,33 @@ const GM = new GameManager()
 // })
 
 $('.options').click(event => {
-    $(event.currentTarget).toggleClass('click')
-    if ($(event.currentTarget).hasClass('one-player')) { $('.two-player').removeClass('click') }
-    if ($(event.currentTarget).hasClass('two-player')) { $('.one-player').removeClass('click') }
-    if ($(event.currentTarget).hasClass('local')) { $('.remote').removeClass('click') }
-    if ($(event.currentTarget).hasClass('remote')) { $('.local').removeClass('click') }
-    if ($(event.currentTarget).hasClass('computer')) {
-        $('.remote').removeClass('click')
-        $('.two-player').removeClass('click')
-        $('.local').addClass('click')
-        $('.one-player').addClass('click')
-    }
+    toggleAnimation(event.currentTarget)
 })
 
 const init = async function () {
     const x = $('#colNum').val()
     const y = $('#rowNum').val()
-    await GM.initGameBoard(x, y)
-    renderer.renderBoard(GM.gameBoard)
+    if (x && y) {
+        await GM.initGameBoard(x, y)
+        renderer.renderBoard(GM.gameBoard)
+        return true
+    }
+    return false
 }
 
-// $(document).keypress(event => {
-//     const [player, direction] = keyMap[event.key] || [1, 'none']
-//     board.movePlayer(player, direction)
-//     renderer.renderBoard(board.matrix)
-//     renderer.renderScores(board.player1.score, board.player2.score)
-//     console.log(board.coins)
-//     if (board.checkForWin()) { renderer.renderEndScreen(board.getWinner()) }
-// })
+$(document).keypress(async event => {
+    if (GM.playing) {
+        const [player, direction] = keyMap[event.key] || [1, 'none']
+        await GM.movePlayer(player, direction)
+        renderer.renderBoard(GM.gameBoard)
+        renderer.renderScores(GM.playerOneScore, GM.playerTwoScore)
+        if (GM.winner) { renderer.renderEndScreen(GM.winner) }
+    }
+})
 
-$('.start-button').click(() => {
-    init()
-    $('.menu').remove()
-    $('.background-filter').remove()
+$('.start-button').click(async () => {
+    if (await init()) {
+        $('.menu').remove()
+        $('.background-filter').remove()
+    }
 })

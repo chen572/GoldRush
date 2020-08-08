@@ -11,19 +11,36 @@
 
 <body>
 
-    <div class="main-container">
-        <div class="game-area">
+    <div class="background-filter"></div>
+
+    <div class="menu">
+        <div class="options one-player">1 Player</div>
+        <div class="options two-player">2 Player</div>
+        <div class="options local">Local</div>
+        <div class="options remote">Remote</div>
+        <div class="options computer">Computer</div>
+
+        <div class="input-container">
             <label for="rowNum">Enter the number of rows</label>
             <input id="rowNum" type="text">
             <label for="colNum">Enter the number of columns</label>
             <input id="colNum" type="text">
+        </div>
+
+        <div class="menu-button-container">
+            <button class="start-button">Start Game</button>
+            <button disabled class="find-button">Find Game</button>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div class="game-area">
         </div>
         <div class="score-container">
             <p class="player-score">Player 1: <span class="player-1-score">0</span></p>
             <p class="player-score">Player 2: <span class="player-2-score">0</span></p>
         </div>
         <div class="button-container">
-            <button class="start-button">Start</button>
         </div>
     </div>
 
@@ -54,6 +71,7 @@
         {{/each}}
     </script>
 
+    <script src="socket.io-client/dist/socket.io.js"></script>
     <script src="handlebars/dist/handlebars.js"></script>
     <script src="jquery/dist/jquery.js"></script>
     <script src="main.js" type="module"></script>

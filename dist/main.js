@@ -10,16 +10,25 @@ $('.options').click(event => {
     toggleAnimation(event.currentTarget)
 })
 
-const init = async function () {
+const init = async function (event) {
     const x = $('#colNum').val()
     const y = $('#rowNum').val()
     if (x && y) {
-        GM = $('.remote').hasClass('click') ? remoteGM : new GameManager()
+        GMinit(event)
         await GM.initGameBoard(x, y)
+        renderer.renderBoard(GM.gameBoard)
+        return true
+    } else if ($(event.currentTarget).hasClass('find-button')) {
+        GMinit(event)
         renderer.renderBoard(GM.gameBoard)
         return true
     }
     return false
+}
+
+const GMinit = (event) => {
+    GM = $('.remote').hasClass('click') ? remoteGM : new GameManager()
+    $(event.currentTarget).hasClass('start-button') ? GM.NewGame() : GM.findGame()
 }
 
 $(document).keypress(async event => {
@@ -32,8 +41,8 @@ $(document).keypress(async event => {
     }
 })
 
-$('.start-button').click(async () => {
-    if (await init()) {
+$('.menu-button-container').on('click', '.start-button, .find-button', async (event) => {
+    if (await init(event)) {
         $('.menu').remove()
         $('.background-filter').remove()
     }

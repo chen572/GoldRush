@@ -9,7 +9,7 @@ export class GameManager {
 
     async initGameBoard(x, y) { this.gameBoard = await $.post(`/board?x=${x}&y=${y}`); this.playing = true }
 
-    async refreshGameBoard() { this.gameBoard = await $.get('/board') }
+    async addRefreshGameBoardListener() { this.gameBoard = await $.get('/board') }
 
     async movePlayer(player, direction) {
         const gameObj = await $.ajax({ url: `/board?player=${player}&direction=${direction}`, method: 'PUT' })

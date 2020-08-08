@@ -4,7 +4,6 @@ class Socket {
     constructor() {
         this.server = require('http').createServer().listen(3001)
         this.io = require('socket.io')(this.server)
-        this.socket = null
         this.rooms = []
     }
 

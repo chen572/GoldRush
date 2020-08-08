@@ -84,9 +84,13 @@ body {
     justify-content: center;
 }
 
+.menu-button-container {
+    width: 100%;
+}
+
 .start-button, .find-button {
     width: 45%;
-    height: 10%;
+    height: 75px;
     margin: 8px;
     background-color: crimson;
     border-radius: 25px;
@@ -125,7 +129,6 @@ body {
     width: 95%;
     display: flex;
     flex-direction: column;
-    transform: translateY(30%);
     color: white;
 }
 

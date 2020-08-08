@@ -2,12 +2,14 @@ const Socket = new (require('../Sockets'))
 const Game = Socket.io.of('/game')
 
 Game.on('connection', (socket) => {
-    socket.on('newPlayer', () => {
-        if (Socket.checkIfAvailableRoom()) {
-            Socket.addToRoom(socket, Socket.findAvailableRoom().roomKey)
-        } else {
-            Socket.createRoom(socket)
-        }
+    socket.on('createRoom', () => {
+        Socket.createRoom(socket)
+    })
+
+    socket.on('joinRoom', () => {
+        const room = Socket.findAvailableRoom()
+        Socket.addToRoom(socket, room.roomKey)
+        Game.to(room.roomKey).emit('board', room.getGameObj())
     })
 
     socket.on('start', (x, y) => {

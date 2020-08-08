@@ -73,7 +73,7 @@ class GoldRush extends Matrix {
         else if (direction === 'up' && player.y !== this.topBound && this.checkNextSpot(player.y - 1, player.x)) { return player.y-- }
         else if (direction === 'left' && player.x !== this.leftBound && this.checkNextSpot(player.y, player.x - 1)) { return player.x-- }
         else if (direction === 'right' && player.x !== this.rightBound && this.checkNextSpot(player.y, player.x + 1)) { return player.x++ }
-        else { return }
+        else { return false }
     }
 
     checkNextSpot = (y, x) => this.get(y, x) === '.' || this.get(y, x) === 'c'

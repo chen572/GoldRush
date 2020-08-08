@@ -28,7 +28,9 @@ const init = async function (event) {
 
 const GMinit = (event) => {
     GM = $('.remote').hasClass('click') ? remoteGM : new GameManager()
-    $(event.currentTarget).hasClass('start-button') ? GM.NewGame() : GM.findGame()
+    if (GM === remoteGM) {
+        $(event.currentTarget).hasClass('start-button') ? GM.NewGame() : GM.findGame()
+    }
 }
 
 $(document).keypress(async event => {

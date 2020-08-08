@@ -24,6 +24,7 @@ export class RemoteGameManager extends GameManager {
     async findGame() {
         this.socket.emit('joinRoom')
         await this.addRefreshGameBoardListener()
+        this.playing = true
     }
 
     initGameBoard(x, y) {

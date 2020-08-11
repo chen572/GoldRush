@@ -4,7 +4,7 @@ import { GameManager } from './classes/GameManager.js'
 import { RemoteGameManager } from './classes/RemoteGameManager.js'
 const renderer = new Renderer()
 const remoteGM = new RemoteGameManager()
-let GM
+let GM = remoteGM
 
 $('.options').click(event => {
     toggleAnimation(event.currentTarget)

@@ -10,6 +10,8 @@ class GoldRush extends Matrix {
         this.leftBound = 0
         this.bottomBound = null
         this.coins = []
+        this.visited = []
+        this.path = []
     }
 
     loadBoard = (x, y) => {
@@ -19,6 +21,20 @@ class GoldRush extends Matrix {
         this.alter(this.player2.x, this.player2.y, this.player2.num)
         this.addCoins()
         this.addObstacles()
+        if (!this.testBoard(x, y)) { return this.loadBoard(x, y) }
+    }
+
+    testBoard = (x, y) => {
+        this.refreshVars()
+        if (!this.coins.every(c => this.getPath([c.posX, c.posY], [0, 0]))) {
+            return false
+        }
+        this.refreshVars()
+        let { posX, posY } = this.coins[0]
+        if (!this.getPath([this.player2.x, this.player2.y], [posX, posY])) {
+            return false
+        }
+        return true
     }
 
     resetVars = (x, y) => {
@@ -42,7 +58,7 @@ class GoldRush extends Matrix {
     }
 
     addObstacles = () => {
-        for (let i = 0; i < this.matrix.length * 1.5; i++) {
+        for (let i = 0; i < this.matrix.length * 1.3; i++) {
             this.createObstacles()
         }
     }
@@ -100,6 +116,34 @@ class GoldRush extends Matrix {
     getWinner = () => this.player1.score > this.player2.score ? 'Player1' : 'Player2'
 
     findInCoinsArr = (x, y) => this.coins.find(c => c.posX === x && c.posY === y)
+
+    refreshVars() { this.visited = []; this.path = [] }
+
+    setGameBoard(board, x, y) { this.matrix = board; this.resetVars(x, y) }
+
+    checkIfVisited(x, y) { return this.visited.find(pos => pos[0] === x && pos[1] === y) }
+
+    checkIfInPath(x, y) { return this.path.find(pos => pos[0] === x && pos[1] === y) }
+
+    getPath(start, end) {
+        let [Sx, Sy] = start
+        const [Dx, Dy] = end
+        this.visited.push(start)
+        if (!this.checkIfInPath(Sx, Sy)) { this.path.push(start) }
+
+        if (Sx - 1 === Dx && Sy === Dy || Sx === Dx && Sy - 1 === Dy) { this.path.push(end); return true }
+        else if ((!this.checkIfVisited(Sx, Sy - 1)) && this.addToDirection({ x: Sx, y: Sy }, 'up')) { return this.getPath([Sx, Sy - 1], end) }
+        else if ((!this.checkIfVisited(Sx, Sy + 1)) && this.addToDirection({ x: Sx, y: Sy }, 'down')) { return this.getPath([Sx, Sy + 1], end) }
+        else if ((!this.checkIfVisited(Sx - 1, Sy)) && this.addToDirection({ x: Sx, y: Sy }, 'left')) { return this.getPath([Sx - 1, Sy], end) }
+        else if ((!this.checkIfVisited(Sx + 1, Sy)) && this.addToDirection({ x: Sx, y: Sy }, 'right')) { return this.getPath([Sx + 1, Sy], end) }
+        else {
+            this.path.pop()
+            if (this.path.length) {
+                return this.getPath(this.path[this.path.length - 1], end)
+            }
+            return false
+        }
+    }
 }
 
 module.exports = GoldRush

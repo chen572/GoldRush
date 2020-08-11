@@ -16,6 +16,6 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use('/board', boardRouter)
 
 const { PORT } = process.env
-app.listen(PORT, () => {
+app.listen(PORT || 3000, () => {
     console.log(`Server is up on port ${PORT}`)
 })

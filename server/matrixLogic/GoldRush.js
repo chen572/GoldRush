@@ -25,11 +25,11 @@ class GoldRush extends Matrix {
     }
 
     testBoard = (x, y) => {
-        this.refreshVars()
+        this.refreshPathVars()
         if (!this.coins.every(c => this.getPath([c.posX, c.posY], [0, 0]))) {
             return false
         }
-        this.refreshVars()
+        this.refreshPathVars()
         let { posX, posY } = this.coins[0]
         if (!this.getPath([this.player2.x, this.player2.y], [posX, posY])) {
             return false
@@ -117,7 +117,7 @@ class GoldRush extends Matrix {
 
     findInCoinsArr = (x, y) => this.coins.find(c => c.posX === x && c.posY === y)
 
-    refreshVars() { this.visited = []; this.path = [] }
+    refreshPathVars() { this.visited = []; this.path = [] }
 
     setGameBoard(board, x, y) { this.matrix = board; this.resetVars(x, y) }
 
